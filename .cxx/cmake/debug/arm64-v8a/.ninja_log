@@ -1,0 +1,27 @@
+# ninja log v5
+52	707	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/fft.c.o	31e2266a37b4d519
+20	727	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/encoder.c.o	802b651ff97d5ad6
+76	744	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/bitstream.c.o	40ce594fc33e89c5
+1	815	0	CMakeFiles/audioencoder.dir/src/main/cpp/Mp3Encoder.cpp.o	d030b9d76bd3f3b6
+33	897	0	CMakeFiles/audioencoder.dir/src/main/cpp/mp3_encoder.cpp.o	6d305e595ea9a8c7
+134	937	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/id3tag.c.o	d09add27253e9d8e
+727	1284	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/mpglib_interface.c.o	7ee87987a7e8231c
+709	1341	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/psymodel.c.o	6ff3ecc34ae51cc4
+744	1395	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/quantize.c.o	4ebae6954c37950f
+898	1542	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/newmdct.c.o	94b987398c8caee9
+815	1585	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/lame.c.o	51d6cf02c045101
+937	1693	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/quantize_pvt.c.o	a4d838892c58c7e8
+1284	1904	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/gain_analysis.c.o	a2fc437022051d1e
+1342	1969	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/presets.c.o	98b42b923f9ac89
+1396	2077	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/tables.c.o	e716ed04a74e39b1
+1542	2183	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/version.c.o	9176896d22056efa
+1591	2263	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/VbrTag.c.o	4ff68560735e625e
+1693	2303	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/util.c.o	a563d50420fd37a8
+1904	2527	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/set_get.c.o	945dfa906bcff98f
+2077	2535	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/reservoir.c.o	99b04552fc84a800
+1969	2550	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/takehiro.c.o	3eb7e2263d458d14
+2183	2664	0	CMakeFiles/audioencoder.dir/src/main/cpp/libmp3lame/vbrquantize.c.o	49051fa55d8d23e7
+2664	3238	0	../../../../build/intermediates/cmake/debug/obj/arm64-v8a/libaudioencoder.so	1b4eb1b643d7fee3
+36	3456	0	CMakeFiles/audiodecoder.dir/src/main/cpp/Mp3Decoder.cpp.o	65f5bae534431de3
+24	3479	0	CMakeFiles/audiodecoder.dir/src/main/cpp/mp3decoder_controller.cpp.o	6132df410cf0cbb
+45	3479	0	CMakeFiles/audiodecoder.dir/src/main/cpp/ffmpegmp3decoder.cpp.o	128920a50c51491c

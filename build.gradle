@@ -8,6 +8,7 @@ android {
     defaultConfig {
         applicationId "com.flyscale.mp3encoder"
         minSdkVersion 19
+        compileSdkVersion(28)
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -23,6 +24,10 @@ android {
                 cFlags "-DSTDC_HEADERS"
             }
         }
+
+        ndk{
+            abiFilters 'armeabi-v7a'
+        }
     }
 
     buildTypes {
@@ -35,6 +40,17 @@ android {
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '28.0.0'
+                }
+            }
         }
     }
 

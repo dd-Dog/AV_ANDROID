@@ -1,0 +1,3 @@
+G:/NDKProject/Mp3Encoder/.cxx/cmake/release/armeabi-v7a/CMakeFiles/audiodecoder.dir
+G:/NDKProject/Mp3Encoder/.cxx/cmake/release/armeabi-v7a/CMakeFiles/edit_cache.dir
+G:/NDKProject/Mp3Encoder/.cxx/cmake/release/armeabi-v7a/CMakeFiles/rebuild_cache.dir

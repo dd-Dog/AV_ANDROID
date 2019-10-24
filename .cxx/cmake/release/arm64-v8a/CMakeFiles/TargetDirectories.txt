@@ -1,0 +1,3 @@
+G:/NDKProject/Mp3Encoder/.cxx/cmake/release/arm64-v8a/CMakeFiles/audioencoder.dir
+G:/NDKProject/Mp3Encoder/.cxx/cmake/release/arm64-v8a/CMakeFiles/edit_cache.dir
+G:/NDKProject/Mp3Encoder/.cxx/cmake/release/arm64-v8a/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,51 @@
+{
+  "buildFiles": [
+    "G:\\NDKProject\\Mp3Encoder\\CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "D:\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build G:\\NDKProject\\Mp3Encoder\\.cxx\\cmake\\debug\\arm64-v8a --target clean"
+  ],
+  "libraries": {
+    "avformat-Debug-arm64-v8a": {
+      "artifactName": "avformat",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\libs\\libavformat.a"
+    },
+    "avutil-Debug-arm64-v8a": {
+      "artifactName": "avutil",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\libs\\libavutil.a"
+    },
+    "avcodec-Debug-arm64-v8a": {
+      "artifactName": "avcodec",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\libs\\libavcodec.a"
+    },
+    "swscale-Debug-arm64-v8a": {
+      "artifactName": "swscale",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\libs\\libswscale.a"
+    },
+    "avdevice-Debug-arm64-v8a": {
+      "artifactName": "avdevice",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\libs\\libavdevice.a"
+    },
+    "audiodecoder-Debug-arm64-v8a": {
+      "artifactName": "audiodecoder",
+      "buildCommand": "D:\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build G:\\NDKProject\\Mp3Encoder\\.cxx\\cmake\\debug\\arm64-v8a --target audiodecoder",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\build\\intermediates\\cmake\\debug\\obj\\arm64-v8a\\libaudiodecoder.so"
+    },
+    "swresample-Debug-arm64-v8a": {
+      "artifactName": "swresample",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\libs\\libswresample.a"
+    },
+    "avfilter-Debug-arm64-v8a": {
+      "artifactName": "avfilter",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\libs\\libavfilter.a"
+    }
+  }
+}

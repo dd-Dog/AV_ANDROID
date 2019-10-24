@@ -1,0 +1,106 @@
+
+{
+	"buildFiles" : [ "G:/NDKProject/Mp3Encoder/CMakeLists.txt" ],
+	"cleanCommands" : 
+	[
+		"D:\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build G:\\NDKProject\\Mp3Encoder\\.cxx\\cmake\\debug\\arm64-v8a --target clean"
+	],
+	"cppFileExtensions" : [ "cpp" ],
+	"libraries" : 
+	{
+		"audiodecoder-Debug-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "audiodecoder",
+			"buildCommand" : "D:\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build G:\\NDKProject\\Mp3Encoder\\.cxx\\cmake\\debug\\arm64-v8a --target audiodecoder",
+			"buildType" : "debug",
+			"files" : 
+			[
+				
+				{
+					"flags" : "  --target=aarch64-none-linux-android --gcc-toolchain=D:/Android/Sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/windows-x86_64 --sysroot=D:/Android/Sdk/ndk-bundle/sysroot  -Daudiodecoder_EXPORTS -I..\\..\\..\\..\\src\\main\\cpp\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\cxx-stl\\llvm-libc++\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\android\\support\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\cxx-stl\\llvm-libc++abi\\include  -isystem D:/Android/Sdk/ndk-bundle/sysroot/usr/include/aarch64-linux-android -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -frtti -fexceptions -std=c++11 -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "G:/NDKProject/Mp3Encoder/src/main/cpp/Mp3Decoder.cpp",
+					"workingDirectory" : "G:/NDKProject/Mp3Encoder/.cxx/cmake/debug/arm64-v8a"
+				},
+				
+				{
+					"flags" : "  --target=aarch64-none-linux-android --gcc-toolchain=D:/Android/Sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/windows-x86_64 --sysroot=D:/Android/Sdk/ndk-bundle/sysroot  -Daudiodecoder_EXPORTS -I..\\..\\..\\..\\src\\main\\cpp\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\cxx-stl\\llvm-libc++\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\android\\support\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\cxx-stl\\llvm-libc++abi\\include  -isystem D:/Android/Sdk/ndk-bundle/sysroot/usr/include/aarch64-linux-android -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -frtti -fexceptions -std=c++11 -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "G:/NDKProject/Mp3Encoder/src/main/cpp/ffmpegmp3decoder.cpp",
+					"workingDirectory" : "G:/NDKProject/Mp3Encoder/.cxx/cmake/debug/arm64-v8a"
+				},
+				
+				{
+					"flags" : "  --target=aarch64-none-linux-android --gcc-toolchain=D:/Android/Sdk/ndk-bundle/toolchains/aarch64-linux-android-4.9/prebuilt/windows-x86_64 --sysroot=D:/Android/Sdk/ndk-bundle/sysroot  -Daudiodecoder_EXPORTS -I..\\..\\..\\..\\src\\main\\cpp\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\cxx-stl\\llvm-libc++\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\android\\support\\include -isystem D:\\Android\\Sdk\\ndk-bundle\\sources\\cxx-stl\\llvm-libc++abi\\include  -isystem D:/Android/Sdk/ndk-bundle/sysroot/usr/include/aarch64-linux-android -D__ANDROID_API__=21 -g -DANDROID -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -Wa,--noexecstack -Wformat -Werror=format-security -std=c++11  -frtti -fexceptions -std=c++11 -O0 -fno-limit-debug-info  -fPIC    -c ",
+					"src" : "G:/NDKProject/Mp3Encoder/src/main/cpp/mp3decoder_controller.cpp",
+					"workingDirectory" : "G:/NDKProject/Mp3Encoder/.cxx/cmake/debug/arm64-v8a"
+				}
+			],
+			"output" : "G:/NDKProject/Mp3Encoder/build/intermediates/cmake/debug/obj/arm64-v8a/libaudiodecoder.so",
+			"toolchain" : "2573999169"
+		},
+		"avcodec-Debug-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "avcodec",
+			"buildType" : "debug",
+			"output" : "G:/NDKProject/Mp3Encoder/libs//libavcodec.a",
+			"toolchain" : "2573999169"
+		},
+		"avdevice-Debug-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "avdevice",
+			"buildType" : "debug",
+			"output" : "G:/NDKProject/Mp3Encoder/libs//libavdevice.a",
+			"toolchain" : "2573999169"
+		},
+		"avfilter-Debug-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "avfilter",
+			"buildType" : "debug",
+			"output" : "G:/NDKProject/Mp3Encoder/libs//libavfilter.a",
+			"toolchain" : "2573999169"
+		},
+		"avformat-Debug-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "avformat",
+			"buildType" : "debug",
+			"output" : "G:/NDKProject/Mp3Encoder/libs//libavformat.a",
+			"toolchain" : "2573999169"
+		},
+		"avutil-Debug-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "avutil",
+			"buildType" : "debug",
+			"output" : "G:/NDKProject/Mp3Encoder/libs//libavutil.a",
+			"toolchain" : "2573999169"
+		},
+		"swresample-Debug-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "swresample",
+			"buildType" : "debug",
+			"output" : "G:/NDKProject/Mp3Encoder/libs//libswresample.a",
+			"toolchain" : "2573999169"
+		},
+		"swscale-Debug-arm64-v8a" : 
+		{
+			"abi" : "arm64-v8a",
+			"artifactName" : "swscale",
+			"buildType" : "debug",
+			"output" : "G:/NDKProject/Mp3Encoder/libs//libswscale.a",
+			"toolchain" : "2573999169"
+		}
+	},
+	"toolchains" : 
+	{
+		"2573999169" : 
+		{
+			"cCompilerExecutable" : "D:/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang.exe",
+			"cppCompilerExecutable" : "D:/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/clang++.exe"
+		}
+	}
+}

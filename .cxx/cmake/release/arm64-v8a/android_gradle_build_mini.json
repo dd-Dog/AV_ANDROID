@@ -1,0 +1,16 @@
+{
+  "buildFiles": [
+    "G:\\NDKProject\\Mp3Encoder\\CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "D:\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build G:\\NDKProject\\Mp3Encoder\\.cxx\\cmake\\release\\arm64-v8a --target clean"
+  ],
+  "libraries": {
+    "audioencoder-Release-arm64-v8a": {
+      "artifactName": "audioencoder",
+      "buildCommand": "D:\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build G:\\NDKProject\\Mp3Encoder\\.cxx\\cmake\\release\\arm64-v8a --target audioencoder",
+      "abi": "arm64-v8a",
+      "output": "G:\\NDKProject\\Mp3Encoder\\build\\intermediates\\cmake\\release\\obj\\arm64-v8a\\libaudioencoder.so"
+    }
+  }
+}
