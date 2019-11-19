@@ -1,10 +1,14 @@
 //
 // Created by bian on 2019/10/21.
 //
-
+extern "C" {    //CPP引用C库，如果不加可能导致undefined reference问题
 #include "ffmpegmp3decoder.h"
 #include <android/log.h>
 #include <zconf.h>
+#include "include/libavfilter/avfilter.h"
+#include <libavdevice/avdevice.h>
+}
+
 
 int FFmpegMp3Decoder::Init(const char *fileString, int packetBufferSizeParam) {
     packetBufferSize = packetBufferSizeParam;
@@ -20,22 +24,34 @@ int FFmpegMp3Decoder::Init(const char *srcFilepath) {
     audioBufferCursor = 0;
     audioBufferSize = 0;
     swrContext = NULL;
+    swsContext = NULL;
     swrBuffer = NULL;
+    audioFrame = NULL;
+    videoFrame = NULL;
+    videoCodexCtx = NULL;
+    pictureValid = false;
+
     swrBufferSize = 0;
     isNeedFirstFrameCorrectFlag = true;
     firstFrameCorrectionInSecs = 0.0f;
 
     //1.注册协议，格式与编码器
-    avformat_network_init();
     av_register_all();
+    avcodec_register_all();
+    avdevice_register_all();
+    avformat_network_init();
+    avfilter_register_all();
 
     formatContext = avformat_alloc_context();
 
     //打开视频源文件
-    if (avformat_open_input(&formatContext, srcFilepath, NULL, NULL) != 0) {
-        LOGE("open input file failed!!!,path=%s", srcFilepath);
-        LOGI("return -1");
-        return -1;
+    int open_ret;
+    if ((open_ret = avformat_open_input(&formatContext, srcFilepath, NULL, NULL)) != 0) {
+        char buf[] = "";
+        av_strerror(open_ret, buf, 1024);//获取错误信息
+        LOGE("open input file failed!!!,path=%s,strerror=(%s)", srcFilepath, buf);
+        free(buf);
+        return open_ret;
     }
     LOGI("open input file success!");
 //    while(true){
@@ -65,50 +81,61 @@ int FFmpegMp3Decoder::Init(const char *srcFilepath) {
 
     }
     if (videoStreamIndex == -1) {
-        LOGE("打不到视频流！");
+        LOGE("找不到视频流！");
     }
     if (audioStreamIndex == -1) {
         LOGE("找不到音频流！");
     }
-    //打开音频流解码器
-    //音频流编解码上下文
-    //音频流
-    AVStream *audioStream = formatContext->streams[audioStreamIndex];
-    audioCodecCtx = formatContext->streams[audioStreamIndex]->codec;
-    if (audioStream->time_base.den && audioStream->time_base.num)
-        timeBase = av_q2d(audioStream->time_base);
-    else if (audioStream->codec->time_base.den && audioStream->codec->time_base.num)
-        timeBase = av_q2d(audioStream->codec->time_base);
 
-    //根据编码id查找解码器
-    AVCodec *acodec = avcodec_find_decoder(audioCodecCtx->codec_id);
-
-    if (!acodec) {
-        LOGE("找不到音频解码器!");
+    if (videoStreamIndex == -1 && audioStreamIndex == -1) {
+        LOGE("No found aduio or video stream, return!");
         return -1;
     }
 
-    //打开解码器
-    int openACodecErrCode = 0;
-    if ((openACodecErrCode = avcodec_open2(audioCodecCtx, acodec, NULL)) < 0) {
-        LOGE("打开音频解码器失败!, openACodecErrCode=%d", openACodecErrCode);
-        return -1;
+    if (audioStreamIndex != -1) {
+        //打开音频流解码器
+        //音频流编解码上下文
+        //音频流
+        AVStream *audioStream = formatContext->streams[audioStreamIndex];
+        audioCodecCtx = formatContext->streams[audioStreamIndex]->codec;
+        if (audioStream->time_base.den && audioStream->time_base.num)
+            timeBase = av_q2d(audioStream->time_base);
+        else if (audioStream->codec->time_base.den && audioStream->codec->time_base.num)
+            timeBase = av_q2d(audioStream->codec->time_base);
+
+        LOGI("set time base done");
+        //根据编码id查找解码器
+        AVCodec *acodec = avcodec_find_decoder(audioCodecCtx->codec_id);
+
+        if (!acodec) {
+            LOGE("找不到音频解码器!");
+            return -1;
+        }
+        LOGI("find audio decoder success!");
+        //打开音频解码器
+        int openACodecErrCode = 0;
+        if ((openACodecErrCode = avcodec_open2(audioCodecCtx, acodec, NULL)) < 0) {
+            LOGE("打开音频解码器失败!, openACodecErrCode=%d", openACodecErrCode);
+            return -1;
+        }
+        LOGI("open audio decoder success!");
     }
 
-    //打开视频解码器
-    videoCodexCtx = formatContext->streams[videoStreamIndex]->codec;
-    //根据编码id查找解码器
-    AVCodec *vcodec = avcodec_find_decoder(videoCodexCtx->codec_id);
-    if (!vcodec) {
-        LOGE("找不到音频解码器!");
-        return -1;
-    }
-
-    //打开解码器
-    int openVCodecErrCode = 0;
-    if ((openVCodecErrCode = avcodec_open2(videoCodexCtx, vcodec, NULL)) < 0) {
-        LOGE("打开音频解码器失败!openVCodecErrCode=%d", openVCodecErrCode);
-        return -1;
+    if (videoStreamIndex != -1) {
+        //打开视频解码器
+        videoCodexCtx = formatContext->streams[videoStreamIndex]->codec;
+        //根据编码id查找解码器
+        AVCodec *vcodec = avcodec_find_decoder(videoCodexCtx->codec_id);
+        if (!vcodec) {
+            LOGE("找不到视频频解码器!");
+            return -1;
+        }
+        //打开解码器
+        int openVCodecErrCode = 0;
+        if ((openVCodecErrCode = avcodec_open2(videoCodexCtx, vcodec, NULL)) < 0) {
+            LOGE("打开视频解码器失败!openVCodecErrCode=%d", openVCodecErrCode);
+            return -1;
+        }
     }
 
     //4.初始化解码后数据的结构体
@@ -131,27 +158,31 @@ int FFmpegMp3Decoder::Init(const char *srcFilepath) {
         }
         audioFrame = av_frame_alloc();
     }
+    LOGI("init output success!");
 
-    //构建视频的格式转换对象以及视频 解码后的数据存放的对象
-
-    bool pictureValid = avpicture_alloc(&picture,
-                                        AV_PIX_FMT_YUV420P,
-                                        videoCodexCtx->width,
-                                        videoCodexCtx->height) == 0;
-    if (!pictureValid) {
-        LOGE("picture alloc failed!");
-        return -1;
+    if (videoStreamIndex != -1) {
+        //构建视频的格式转换对象以及视频 解码后的数据存放的对象
+        bool pictureValid = avpicture_alloc(&picture,
+                                            AV_PIX_FMT_YUV420P,
+                                            videoCodexCtx->width,
+                                            videoCodexCtx->height) == 0;
+        LOGI("pictureValid=%d", pictureValid);
+        if (!pictureValid) {
+            LOGE("picture alloc failed!");
+            return -1;
+        }
+        swsContext = sws_getCachedContext(swsContext,
+                                          videoCodexCtx->width,
+                                          videoCodexCtx->height,
+                                          videoCodexCtx->pix_fmt,
+                                          videoCodexCtx->width,
+                                          videoCodexCtx->height,
+                                          AV_PIX_FMT_YUV420P,
+                                          SWS_FAST_BILINEAR,
+                                          NULL, NULL, NULL);
+        videoFrame = av_frame_alloc();
     }
-    swsContext = sws_getCachedContext(swsContext,
-                                      videoCodexCtx->width,
-                                      videoCodexCtx->height,
-                                      videoCodexCtx->pix_fmt,
-                                      videoCodexCtx->width,
-                                      videoCodexCtx->height,
-                                      AV_PIX_FMT_YUV420P,
-                                      SWS_FAST_BILINEAR,
-                                      NULL, NULL, NULL);
-    videoFrame = av_frame_alloc();
+    return 0;
 }
 
 int FFmpegMp3Decoder::Decode() {
@@ -160,6 +191,7 @@ int FFmpegMp3Decoder::Decode() {
         if (-1 == accompanyPacket->size) {
             break;
         }
+        LOGI("write AudioPacket to file");
         fwrite(accompanyPacket->buffer, sizeof(short), accompanyPacket->size, outFile);
     }
 }
@@ -191,6 +223,7 @@ AudioPacket *FFmpegMp3Decoder::decodePacket() {
  * @return
  */
 int FFmpegMp3Decoder::readSamples(short *samples, int size) {
+    LOGI("readSamples,size=%d", size);
     int sampleSize = size;
     while (size > 0) {
         if (audioBufferCursor < audioBufferSize) {
@@ -199,6 +232,7 @@ int FFmpegMp3Decoder::readSamples(short *samples, int size) {
             //取要读取的大小和剩余大小 取较小的值为本次读取的大小
 //            int copySize = MIN(size, audioBufferDataSize);
             int copySize = size < audioBufferDataSize ? size : audioBufferDataSize;
+            LOGI("copySize=%d", copySize);
             //从audioBuffer拷贝到samples，字节数为copysize*2
             memcpy(samples + (sampleSize - size), audioBuffer + audioBufferCursor, copySize * 2);
             size -= copySize;
@@ -220,6 +254,7 @@ int FFmpegMp3Decoder::readSamples(short *samples, int size) {
 
 
 int FFmpegMp3Decoder::readFrame() {
+    LOGI("readFrame")
     //读取流内容并且解码
     int gotFrame = 0;
     while (true) {
@@ -230,7 +265,7 @@ int FFmpegMp3Decoder::readFrame() {
         }
 
         int packetStreamIndex = avPacket.stream_index;
-        if (packetStreamIndex = videoStreamIndex) {
+        if (packetStreamIndex == videoStreamIndex) {
             //视频流
             int len = avcodec_decode_video2(videoCodexCtx, videoFrame, &gotFrame, &avPacket);
             if (len < 0) {
@@ -257,9 +292,11 @@ int FFmpegMp3Decoder::readFrame() {
             }
         }
     }
+    return 0;
 }
 
 int FFmpegMp3Decoder::handleAudioFrame() {
+    LOGI("handleAudioFrame")
     void *audioData;
     int numFrames;
     int numChannels = OUT_PUT_CHANNELS;
@@ -304,6 +341,7 @@ int FFmpegMp3Decoder::handleAudioFrame() {
 //					LOGI(" \n duration is %.6f position is %.6f audioBufferSize is %d\n", duration, position, audioBufferSize);
     audioBuffer = (short *) audioData;
     audioBufferCursor = 0;
+    return 0;
 }
 
 void FFmpegMp3Decoder::handleVideoFrame(int channels) {
@@ -348,7 +386,7 @@ void FFmpegMp3Decoder::Destroy() {
     }
 
     //关闭视频资源
-    if (swsContext) {
+    if (swsContext != NULL) {
         sws_freeContext(swsContext);
         swsContext = NULL;
     }
@@ -356,11 +394,11 @@ void FFmpegMp3Decoder::Destroy() {
         avpicture_free(&picture);
         pictureValid = false;
     }
-    if (videoFrame) {
+    if (videoFrame != NULL) {
         av_free(videoFrame);
         videoFrame = NULL;
     }
-    if (videoCodexCtx) {
+    if (videoCodexCtx != NULL) {
         avcodec_close(videoCodexCtx);
         videoCodexCtx = NULL;
     }

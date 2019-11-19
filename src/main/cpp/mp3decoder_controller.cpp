@@ -21,6 +21,7 @@ int AccompanyDecoderController::Init(const char *accompanyPath, const char *pcmF
     int accompanyMetaData[2];
     int meta_ret = tempDecoder->getMusicMeta(accompanyPath, accompanyMetaData);
     delete tempDecoder;
+
     if(meta_ret<0){
         LOGE("init getMusicMeta failed,meta_ret=%d", meta_ret);
         return meta_ret;

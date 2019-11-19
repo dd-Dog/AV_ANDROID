@@ -1,10 +1,11 @@
 package com.flyscale.mp3encoder;
 
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 测试FFmpeg解码器
      */
     /** 原始的文件路径 **/
-    private static String mp3FilePath = "/mnt/sdcard/bianjb_test/131.mp3";
+    private static String mp3FilePath = "/mnt/sdcard/bianjb_test/tonghuazhen.mp3";
     /** 解码后的PCM文件路径 **/
     private static String pcmFilePath = "/mnt/sdcard/bianjb_test/131.pcm";
     private void testFFmpegDecoder(){

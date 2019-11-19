@@ -1,9 +1,8 @@
 //
 // Created by bian on 2019/10/8.
 //
-#include <android/log.h>
-#include <mp3_encoder.h>
 #include "include/com_flyscale_mp3encoder_Mp3Encoder.h"
+#include "include/mp3_encoder.h"
 
 #define LOG_TAG "Mp3Encorder"
 #define LOGI(FORMAT, ...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,FORMAT,##__VA_ARGS__);

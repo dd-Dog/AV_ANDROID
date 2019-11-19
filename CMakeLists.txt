@@ -37,7 +37,7 @@ set(SRC_FILES
         #        src/main/cpp/libmp3lame/VbrTag.c
         #        src/main/cpp/libmp3lame/version.c
         )
-#编译为共享库，名称audioencoder
+#编译为共享库
 add_library(
         audiodecoder
 
@@ -47,46 +47,69 @@ add_library(
         #源文件路径
         ${SRC_FILES})
 
-add_library(avformat STATIC IMPORTED)
-add_library(avcodec STATIC IMPORTED)
-add_library(avdevice STATIC IMPORTED)
-add_library(avfilter STATIC IMPORTED)
-add_library(avutil STATIC IMPORTED)
-add_library(swresample STATIC IMPORTED)
-add_library(swscale STATIC IMPORTED)
+#add_library(avformat STATIC IMPORTED)
+#add_library(avcodec STATIC IMPORTED)
+#add_library(avdevice STATIC IMPORTED)
+#add_library(avfilter STATIC IMPORTED)
+#add_library(avutil STATIC IMPORTED)
+#add_library(swresample STATIC IMPORTED)
+#add_library(swscale STATIC IMPORTED)
+#add_library(fdk-aac STATIC IMPORTED)
+#add_library(x264 STATIC IMPORTED)
+#add_library(mp3lame STATIC IMPORTED)
 
-set(STATIC_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/)
+add_library(avformat-57 SHARED IMPORTED)
+add_library(avcodec-57 SHARED IMPORTED)
+add_library(avdevice-57 SHARED IMPORTED)
+add_library(avfilter-6 SHARED IMPORTED)
+add_library(avutil-55 SHARED IMPORTED)
+add_library(swresample-2 SHARED IMPORTED)
+add_library(swscale-4 SHARED IMPORTED)
 
-set_target_properties(avcodec
-        PROPERTIES IMPORTED_LOCATION
-        ${STATIC_LIBS_DIR}/libavcodec.a)
-set_target_properties(avdevice
-        PROPERTIES IMPORTED_LOCATION
-        ${STATIC_LIBS_DIR}/libavdevice.a)
-set_target_properties(avfilter
-        PROPERTIES IMPORTED_LOCATION
-        ${STATIC_LIBS_DIR}/libavfilter.a)
-set_target_properties(avformat
-        PROPERTIES IMPORTED_LOCATION
-        ${STATIC_LIBS_DIR}/libavformat.a)
-set_target_properties(avutil
-        PROPERTIES IMPORTED_LOCATION
-        ${STATIC_LIBS_DIR}/libavutil.a)
-set_target_properties(swresample
-        PROPERTIES IMPORTED_LOCATION
-        ${STATIC_LIBS_DIR}/libswresample.a)
-set_target_properties(swscale
-        PROPERTIES IMPORTED_LOCATION
-        ${STATIC_LIBS_DIR}/libswscale.a)
+set(STATIC_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/armeabi-v7a/)
 
-target_link_libraries(audiodecoder z)
-target_link_libraries(audiodecoder avformat)
-target_link_libraries(audiodecoder avdevice)
-target_link_libraries(audiodecoder avfilter)
-target_link_libraries(audiodecoder avcodec)
-target_link_libraries(audiodecoder avutil)
-target_link_libraries(audiodecoder swresample)
-target_link_libraries(audiodecoder swscale)
+set_target_properties(avcodec-57
+        PROPERTIES IMPORTED_LOCATION
+        ${STATIC_LIBS_DIR}/libavcodec-57.so)
+set_target_properties(avdevice-57
+        PROPERTIES IMPORTED_LOCATION
+        ${STATIC_LIBS_DIR}/libavdevice-57.so)
+set_target_properties(avfilter-6
+        PROPERTIES IMPORTED_LOCATION
+        ${STATIC_LIBS_DIR}/libavfilter-6.so)
+set_target_properties(avformat-57
+        PROPERTIES IMPORTED_LOCATION
+        ${STATIC_LIBS_DIR}/libavformat-57.so)
+set_target_properties(avutil-55
+        PROPERTIES IMPORTED_LOCATION
+        ${STATIC_LIBS_DIR}/libavutil-55.so)
+set_target_properties(swresample-2
+        PROPERTIES IMPORTED_LOCATION
+        ${STATIC_LIBS_DIR}/libswresample-2.so)
+set_target_properties(swscale-4
+        PROPERTIES IMPORTED_LOCATION
+        ${STATIC_LIBS_DIR}/libswscale-4.so)
+#set_target_properties(fdk-aac
+#        PROPERTIES IMPORTED_LOCATION
+#        ${STATIC_LIBS_DIR}/libfdk-aac.a)
+#set_target_properties(x264
+#        PROPERTIES IMPORTED_LOCATION
+#        ${STATIC_LIBS_DIR}/libx264.a)
+#set_target_properties(mp3lame
+#        PROPERTIES IMPORTED_LOCATION
+#        ${STATIC_LIBS_DIR}/libmp3lame.a)
+
+target_link_libraries(audiodecoder z) #链接系统libz库
+target_link_libraries(audiodecoder swresample-2)
+target_link_libraries(audiodecoder avdevice-57)
+target_link_libraries(audiodecoder avformat-57)
+target_link_libraries(audiodecoder avfilter-6)
+target_link_libraries(audiodecoder avcodec-57)
+target_link_libraries(audiodecoder avutil-55)
+target_link_libraries(audiodecoder swscale-4)
+#target_link_libraries(audiodecoder fdk-aac)
+#target_link_libraries(audiodecoder x264)
+#target_link_libraries(audiodecoder mp3lame)
 
 #在默认路径下查找log库，并保存在变量log-lib中
 find_library(log-lib log)
