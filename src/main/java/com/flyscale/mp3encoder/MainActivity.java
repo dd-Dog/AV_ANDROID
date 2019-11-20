@@ -27,33 +27,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        testFFmpegDecoder();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                testFFmpegDecoder();
+            }
+        }).start();
     }
 
     /**
      * 测试FFmpeg解码器
      */
-    /** 原始的文件路径 **/
-    private static String mp3FilePath = "/mnt/sdcard/bianjb_test/tonghuazhen.mp3";
-    /** 解码后的PCM文件路径 **/
+    /**
+     * 原始的文件路径
+     **/
+    private static String mp3FilePath = "/mnt/sdcard/bianjb_test/131.mp3";
+    /**
+     * 解码后的PCM文件路径
+     **/
     private static String pcmFilePath = "/mnt/sdcard/bianjb_test/131.pcm";
-    private void testFFmpegDecoder(){
+
+    private void testFFmpegDecoder() {
         long startTimeMills = System.currentTimeMillis();
         File srcFile = new File(mp3FilePath);
-        if (!srcFile.exists()){
+        if (!srcFile.exists()) {
             Log.e(getClass().getName(), "file nost exist!!!");
             return;
         }
         Mp3Decoder decoder = new Mp3Decoder();
         int ret = decoder.init(mp3FilePath, pcmFilePath);
         Log.d(getClass().getName(), "ret=" + ret);
-        if(ret >= 0) {
+        if (ret >= 0) {
             decoder.decode();
             decoder.destroy();
         } else {
             Log.i(getClass().getName(), "Decoder Initialized Failed...");
         }
-        int wasteTimeMills = (int)(System.currentTimeMillis() - startTimeMills);
+        int wasteTimeMills = (int) (System.currentTimeMillis() - startTimeMills);
         Log.i(getClass().getName(), "Decode Mp3 Waste TimeMills : " + wasteTimeMills + "ms");
     }
 

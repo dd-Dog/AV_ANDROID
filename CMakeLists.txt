@@ -11,8 +11,8 @@ include_directories(src/main/cpp/include/)
 
 set(SRC_FILES
         src/main/cpp/Mp3Decoder.cpp
-        src/main/cpp/ffmpegmp3decoder.cpp
-        src/main/cpp/mp3decoder_controller.cpp
+        src/main/cpp/accompany_decoder.cpp
+        src/main/cpp/accompany_decoder_controller.cpp
 
         #######################libmp3lame测试源码################################
         #        src/main/cpp/mp3_encoder.cpp
